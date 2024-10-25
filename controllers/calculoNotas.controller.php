@@ -39,7 +39,45 @@ function calcularListados(array $datos): array
     return ['aprobadoTodo' => $aprobadoTodo, 'promocionan' => $promocionan, 'noPromocionan' => $noPromocionan,'suspendidoAlMenosUna' => $suspendidoAlMenosUna];
 
 }
+//Funcion que procesa las calficaciones por asignatura y devuleve os resultados
+function procesar(array $datos): array {
+    $resultado = [];
+    foreach ($datos as $asignatura => $alumnos) {
+        $datosAsignatura = [];
+        $sumatorio = 0;
+        $suspensos = 0;
+        $aprobados = 0;
+        $max = ['alumno' => 'N/A', 'nota' => -1];
+        $min = ['alumno' => 'N/A', 'nota' => 11];
 
+        foreach ($alumnos as $alumno => $notas) {
+            $mediaAlumno = array_sum($notas) / count($notas);
+            $sumatorio += $mediaAlumno;
+
+            if ($mediaAlumno < 5) {
+                $suspensos++;
+            } else {
+                $aprobados++;
+            }
+
+            if ($mediaAlumno > $max['nota']) {
+                $max = ['alumno' => $alumno, 'nota' => $mediaAlumno];
+            }
+            if ($mediaAlumno < $min['nota']) {
+                $min = ['alumno' => $alumno, 'nota' => $mediaAlumno];
+            }
+        }
+
+        $datosAsignatura['media'] = !empty($alumnos) ? $sumatorio / count($alumnos) : '-';
+        $datosAsignatura['suspensos'] = $suspensos;
+        $datosAsignatura['aprobados'] = $aprobados;
+        $datosAsignatura['max'] = $max;
+        $datosAsignatura['min'] = $min;
+
+        $resultado[$asignatura] = $datosAsignatura;
+    }
+    return $resultado;
+}
 
 //Funcion para comprobar que el JSON este bien formado
 function checkErrors(string $texto): array
