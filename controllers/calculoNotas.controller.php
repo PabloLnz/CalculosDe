@@ -6,6 +6,11 @@ $data = [];
 if (!empty($_POST)) {
     $data['errors'] = checkErrors($_POST['texto']);
     $data['input']['texto'] = filter_var($_POST['texto'], FILTER_SANITIZE_SPECIAL_CHARS);
+    if (empty($data['errors'])) {
+        $datos = json_decode($_POST['texto'], true);
+        $data['resultado'] = procesar($datos);
+        $data['listas'] = calcularListados($datos);
+    }
 }
 
 //Funcion para almacenar a los alumnos segun sus aprobados y suspensos
@@ -80,8 +85,7 @@ function procesar(array $datos): array {
 }
 
 //Funcion para comprobar que el JSON este bien formado
-function checkErrors(string $texto): array
-{
+function checkErrors(string $texto): array {
     $errors = [];
     if (empty($texto)) {
         $errors['texto'][] = 'Inserte un JSON a analizar';
@@ -89,9 +93,37 @@ function checkErrors(string $texto): array
         $datos = json_decode($texto, true);
         if (is_null($datos)) {
             $errors['texto'][] = 'El texto introducido no es un JSON bien formado';
+        } else {
+            if (!is_array($datos)) {
+                $errors['texto'][] = 'El JSON no contiene un array de materias';
+            } else {
+                foreach ($datos as $asignatura => $alumnos) {
+                    if (!is_string($asignatura) || mb_strlen(trim($asignatura)) < 1) {
+                        $errors['texto'][] = "'$asignatura' no es un nombre de asignatura válido";
+                    }
+                    if (!is_array($alumnos)) {
+                        $errors['texto'][] = "'$asignatura' no contiene un array de alumnos";
+                    } else {
+                        foreach ($alumnos as $alumno => $notas) {
+                            if (!is_string($alumno) || mb_strlen(trim($alumno)) < 1) {
+                                $errors['texto'][] = "El alumno '$alumno' de la asignatura '$asignatura' no es un nombre de alumno válido";
+                            }
+                            if (!is_array($notas)) {
+                                $errors['texto'][] = "Las notas del alumno '$alumno' en la asignatura '$asignatura' no son un array";
+                            } else {
+                                foreach ($notas as $nota) {
+                                    if (!is_numeric($nota)) {
+                                        $errors['texto'][] = "La nota '$nota' del alumno '$alumno' en la asignatura '$asignatura' no es un número";
+                                    } elseif ($nota < 0 || $nota > 10) {
+                                        $errors['texto'][] = "La nota '$nota' del alumno '$alumno' en la asignatura '$asignatura' no tiene un valor entre 0 y 10";
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
-
-
     }
     return $errors;
 }
