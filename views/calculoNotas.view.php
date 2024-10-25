@@ -82,4 +82,15 @@
             </ul>
         </div>
     </div>
+    <!--Alumnos que promocionan-->
+    <div class="col-12 col-lg-6">
+        <div class="alert alert-info">
+            <h6 class="m-0 font-weight-bold text-primary">Alumnos que promocionan</h6>
+            <ul>
+                <?php foreach ($data['listas']['promocionan'] as $alumno) { ?>
+                    <li><?php echo $alumno; ?></li>
+                <?php } ?>
+            </ul>
+        </div>
+    </div>
 <?php } ?>
