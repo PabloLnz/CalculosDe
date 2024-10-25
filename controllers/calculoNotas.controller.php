@@ -8,7 +8,7 @@ if (!empty($_POST)) {
     $data['input']['texto'] = filter_var($_POST['texto'], FILTER_SANITIZE_SPECIAL_CHARS);
 }
 
-//Funcion para almacenar a los alumnos segun sus aprobados y suspensos
+//Funcion para almacenar  los alumnos segun sus aprobados y suspensos
 function calcularListados(array $datos): array
 {
     $aprobadoTodo = [];
