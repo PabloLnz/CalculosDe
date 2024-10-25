@@ -8,6 +8,7 @@ if (!empty($_POST)) {
     $data['input']['texto'] = filter_var($_POST['texto'], FILTER_SANITIZE_SPECIAL_CHARS);
 }
 
+//Funcion para comprobar que el JSON este bien formado
 function checkErrors(string $texto): array
 {
     $errors = [];
