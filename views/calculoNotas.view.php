@@ -60,4 +60,15 @@
             </div>
         </div>
     </div>
+    <!-- Listados de alumnos -->
+    <div class="col-12 col-lg-6">
+        <div class="alert alert-success">
+            <h6 class="m-0 font-weight-bold text-primary">Alumnos que han aprobado todo</h6>
+            <ul>
+                <?php foreach ($data['listas']['aprobadoTodo'] as $alumno) { ?>
+                    <li><?php echo $alumno; ?></li>
+                <?php } ?>
+            </ul>
+        </div>
+    </div>
 <?php } ?>
