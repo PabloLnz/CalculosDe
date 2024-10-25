@@ -71,4 +71,15 @@
             </ul>
         </div>
     </div>
+    <!--Alumnos suspenden 1-->
+    <div class="col-12 col-lg-6">
+        <div class="alert alert-warning">
+            <h6 class="m-0 font-weight-bold text-primary">Alumnos que han suspendido al menos una asignatura</h6>
+            <ul>
+                <?php foreach ($data['listas']['suspendidoAlMenosUna'] as $alumno) { ?>
+                    <li><?php echo $alumno; ?></li>
+                <?php } ?>
+            </ul>
+        </div>
+    </div>
 <?php } ?>
