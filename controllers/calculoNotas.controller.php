@@ -84,7 +84,7 @@ function procesar(array $datos): array {
     return $resultado;
 }
 
-//Funcion para comprobar que el JSON este bien formado
+//Funcion para comprobar que el JSON este bien formado y los valores esten entre los establecidos
 function checkErrors(string $texto): array {
     $errors = [];
     if (empty($texto)) {
