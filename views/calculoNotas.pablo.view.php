@@ -11,7 +11,7 @@
                 <h6 class="m-0 font-weight-bold text-primary">Datos asignaturas</h6>
             </div>
             <div class="card-body">
-                <form method="post" action="./?sec=calculoNotas">
+                <form method="post" action="./?sec=calculoNotas.pablo">
                     <div class="mb-3">
                         <label for="texto">Datos a analizar (JSON):</label>
                         <textarea class="form-control" name="texto" id="texto" rows="10"

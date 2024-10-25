@@ -130,7 +130,7 @@ function checkErrors(string $texto): array {
 
 
 include 'views/templates/header.php';
-include 'views/calculoNotas.view.php';
+include 'views/calculoNotas.pablo.view.php';
 include 'views/templates/footer.php';
 
 
